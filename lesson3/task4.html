@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Titteli</title>
+    </head>
+    <body>
+        <p> Click the button to give you a set of lottery numbers.</p>
+        <input type="button" value="Give numbers" onclick="getLotterySet()"><br>
+        <output id="play"></output>
+        <script>
+        
+            //we need an array of 40 numbers
+            const NUMBERS = 40;
+            
+            //shuffles an array to random order
+            function shuffleArray(a) {
+                for (let i = a.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+            }
+            
+            //prints an array, element by element, to the document
+            function printArray(a) {
+                let str = "";
+                for (let i of a)  str += + i + "<br>";
+                document.getElementById("play").innerHTML = str;
+            }
+            
+            //gives an ordered array of seven random numbers between 1-40 and prints it
+            function getLotterySet() {
+                let setOfNumbers = [];
+                
+                //put 1-40 into the array in order
+                for(let i = 1; i <= NUMBERS; i++) setOfNumbers.push(i);
+                
+                //shuffles the array
+                shuffleArray(setOfNumbers); 
+                
+                //take first 7 numbers from shuffled array into new one and put in order
+                let lotterySet = setOfNumbers.slice(0,7);
+                lotterySet.sort(function(a, b) {return a-b;});
+                
+                //finally print the array
+                printArray(lotterySet);
+            }
+
+        </script>
+    </body>
+</html>

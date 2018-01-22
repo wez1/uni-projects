@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Titteli</title>
+    </head>
+    <body>
+        <form onSubmit="return validateForm();">
+            <span>Validate any given ID with this form (incase valid, might belong to someone)</span><br>
+            <span>DISCLAIMER: Using any ID validated here, to fake your identity, is illegal!</span><br><br>
+            <span>Enter ID (ddmmyy#nnnt) and click 'Check' or press enter. <br></span>
+            <input type="text" id="txtInput" value="" autofocus><br>
+            <input type="button" value="Check" onclick="validateForm()">
+            <output id="result"></output>
+        </form>
+        <script>
+
+        //the main function to validate form
+        //would be simpler if we didn't validate last letter too
+        function validateForm() {
+            let str = ""; let tmp = "";
+            str = document.getElementById("txtInput").value;
+            
+            //first check that the form is right
+            if ( str.match(/^(((0[1-9])|([12][0-9])|(3[01]))((0[1-9])|(1[012]))([0-9]{2})[-+A](\d{3})\w)$/g) ){
+                
+                //then check last character
+                tmp = chkLastChar( str.match(/(\d{3})+/g) );
+                if (tmp == str[str.length-1]) {
+                    
+                    //Then check female or male
+                    if (parseInt(str[str.length-2])%2 == 0 )
+                        document.getElementById("result").innerHTML = "Valid! (female)";
+                    else
+                        document.getElementById("result").innerHTML = "Valid! (male)";
+                        
+                }
+                
+                //last letter must be wrong (also give correct one)
+                else document.getElementById("result").innerHTML =
+                "Valid form but wrong last letter! (should be '"+tmp+"')";
+            }
+            //the whole form must be wrong so lets give error!
+            else document.getElementById("result").innerHTML = "Invalid form!";
+            
+            //will allow enter to submit form data
+            return false;
+        }
+        
+        //DISCLAIMER: this is optional and will allow to check for actual valid ID
+        function chkLastChar(obj) {
+            
+            let str = "";
+            let nineDigits = "";
+            let num = 0;
+            
+            for (i of obj) nineDigits += i;
+            
+            num = parseInt(nineDigits);
+ 
+            //last letter gets chosen according to these rules
+            //we could generate pseudo-ID even without this rule
+            //better way to do this would be to use a separate file to check the table
+            switch (num%31) {
+            case 0: str = '0'; break;
+            case 1: str = '1'; break;
+            case 2: str = '2'; break;
+            case 3: str = '3'; break;
+            case 4: str = '4'; break;
+            case 5: str = '5'; break;
+            case 6: str = '6'; break;
+            case 7: str = '7'; break;
+            case 8: str = '8'; break;
+            case 9: str = '9'; break;
+            case 10: str = 'A'; break;
+            case 11: str = 'B'; break;
+            case 12: str = 'C'; break;
+            case 13: str = 'D'; break;
+            case 14: str = 'E'; break;
+            case 15: str = 'F'; break;
+            case 16: str = 'H'; break;
+            case 17: str = 'J'; break;
+            case 18: str = 'K'; break;
+            case 19: str = 'L'; break;
+            case 20: str = 'M'; break;
+            case 21: str = 'N'; break;
+            case 22: str = 'P'; break;
+            case 23: str = 'R'; break;
+            case 24: str = 'S'; break;
+            case 25: str = 'T'; break;
+            case 26: str = 'U'; break;
+            case 27: str = 'V'; break;
+            case 28: str = 'W'; break;
+            case 29: str = 'X'; break;
+            case 28: str = 'Y'; break;
+            }
+            return str;
+        }
+        </script>
+    </body>
+</html>

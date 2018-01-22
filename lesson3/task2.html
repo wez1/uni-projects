@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Titteli</title>
+    </head>
+    <body>
+        <form onSubmit="return false;">
+            <span>Give date in form dd.mm.yyyy ((0)1-31.(0)1-12.1000-9999)</span><br>
+            <input type="text" id="txtInput" value="" autofocus><br>
+            <input type="button" value="Check" onclick="chkDate()">
+            <output id="result"></output>
+        </form>
+        <script>
+        
+            //matches for the validity and returns success/error message
+            function matchString() {
+                let givenString = document.getElementById("txtInput").value;
+                //I know, it's long :)
+                if (
+                //------------------|______________DAY________________|_________MONTH_______|____YEAR____|------
+                !(givenString.match(/^(((0?[1-9])|([12][0-9])|(3[01]))\.((0?[1-9])|(1[012]))\.([1-9]\d{3}))$/g)))
+                    return "Invalid input!";
+                else return givenString + " is a valid date!";
+            }
+            
+            //main function: check validity and pass to print
+            function chkDate() {
+                let str = "";
+                str = matchString();
+                printResult(str);
+            }
+
+            //prints the value passed in
+            function printResult(result) {
+                document.getElementById("result").innerHTML = result;
+            }
+            
+        </script>
+    </body>
+</html>

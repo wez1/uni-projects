@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> </title>
+    </head>
+    <body>
+        <form>
+            <span>Enter your password (Must be 8-30 characters, allowed characters: a-z  A-Z  _-,.)</span><br>
+            <input type="password" id="txtInput" value="" autofocus><br>
+            <span>Enter again</span><br>
+            <input type="password" id="txtInput2" value="" autofocus><br>
+            <input type="button" value="Compare" onclick="checkPasswords()">
+            <output id="result"></output>
+        </form>
+        <script>
+        
+            //compares strings and returns a success/error message as a string
+            function comparePasswords() {
+                let firstString = document.getElementById("txtInput").value;
+                let secondString = document.getElementById("txtInput2").value;
+                
+                if(!(firstString == secondString)) return "Error! Passwords didn't match!";
+                else if (!(firstString.match(/^[\w\.\,\-]{8,30}$/g))) return "Error! Invalid input!";
+                else return "Success! Passwords match and are valid";
+            }
+            
+            //main function: compare strings and pass to print
+            function checkPasswords() {
+                let str = ""; 
+                str = comparePasswords();
+                printResult(str);
+            }
+
+            //prints the value passed in
+            function printResult(result) {
+                document.getElementById("result").innerHTML = result;
+            }
+        </script>
+    </body>
+</html>

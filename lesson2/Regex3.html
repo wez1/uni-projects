@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> </title>
+    </head>
+    <body>
+        <input type="text" id="txtInput" value="" autofocus>
+        <input type="submit" value="show" onclick="checkValue()">
+        <output id="result"></output>
+        
+        <script>
+            //check value and send to print
+            function checkValue(){
+                let str = "";
+                str = document.getElementById("txtInput").value;
+                str = str.match(/^\d{5}.$/g);
+                
+                if (!str){
+                    str = "ERROR!";
+                    }
+                printResult(str);
+            }
+            //prints the validated value
+            function printResult(foo){
+                document.getElementById("result").innerHTML = foo;
+            }
+        </script>
+    </body>
+</html>
