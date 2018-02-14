@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Code parser</title>
+    </head>
+    <body>
+        <div style="margin-bottom: 20px;">
+        <h1> Your bank accounts</h1>
+        <h3>Normal account</h3>
+        <span> balance: </span><output id="bal1"></output></span>
+        <p> Amount of deposit / withdraw:</p>
+        <input type="txt" id="txtInput1" maxlength="20" autofocus>
+        <input type="button" value="Draw" 
+            onclick="accNormal.draw(parseDraw('txtInput1', accNormal)); update();">
+        <input type="button" value="Deposit" 
+            onclick="accNormal.deposit(parseDeposit('txtInput1')); update();">
+        <h3>Saving account</h3>
+        <span> balance: </span><output id="bal2"></output></span>
+        <p> Amount of deposit / withdraw:</p>
+        <input type="txt" id="txtInput2" maxlength="100" autofocus>
+        <input type="button" value="Draw" 
+        onclick="accSaving.draw(parseDraw('txtInput2', accSaving)); update();">
+        <input type="button" value="Deposit" 
+        onclick="accSaving.deposit(parseDeposit('txtInput2')); update();">
+        <input type="button" value="Interest" onclick="accSaving.addInterest(); update();">
+        </div>
+        
+        <script>
+        
+        //classes
+        class Account {
+            constructor(balance) {
+                this.balance = balance;
+            }
+            deposit(amount) {
+                this.balance += amount;
+                return this.balance;
+            }
+            draw(amount) {
+                this.balance -= amount;
+                return this.balance;
+            }
+        }
+        
+        class SavingAccount extends Account {
+            constructor(balance, interest) {
+                super(balance);
+                this.interest = interest;
+            }
+            addInterest() {
+                this.balance *= (this.interest/100+1); 
+            }
+        }
+        
+        //logic
+        const accNormal = new Account(5000);
+        const accSaving = new SavingAccount(2000,5);
+        
+        function parseDeposit(prm){
+            let num = parseFloat(document.getElementById(prm).value);
+            if (num && !isNaN(num)) return num;
+            else {alert("Invalid input given!"); return 0;}
+        }
+        
+        function parseDraw(prm, acc){
+            let num = parseFloat(document.getElementById(prm).value);
+            if (num && !isNaN(num) && (acc.balance-num >= 0))
+                return num;
+            else {alert("Invalid input given!"); return 0;}
+        }
+        
+        function update(){
+            document.getElementById("bal1").innerHTML = accNormal.balance.toFixed(2);
+            document.getElementById("bal2").innerHTML = accSaving.balance.toFixed(2);
+        }
+        
+        update();
+
+        </script>
+
+    </body>
+</html>
